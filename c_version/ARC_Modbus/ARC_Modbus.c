@@ -3,14 +3,14 @@
 #include "ARC_Modbus_Encoder.h"
 
 #if ARC_Modbus_RTU_ENABLED > 0
-void ARC_MODBUS_RTU_Initial(ARC_MODUBS_RTU_HandleTypeDef* iModbusHandel, uint8_t iSlaveID)
+void ARC_MODBUS_RTU_Initial(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel, uint8_t iSlaveID)
 {
 	iModbusHandel->slave_id = iSlaveID;
 	iModbusHandel->interface.Event_TxWork = NULL;
 	iModbusHandel->rx_handler.buffer_enable = false;
 }
 
-void ARC_MODBUS_RTU_RxWork_s(ARC_MODUBS_RTU_HandleTypeDef* iModbusHandel, char* iBytes, int iLength)
+void ARC_MODBUS_RTU_RxWork_s(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel, char* iBytes, int iLength)
 {
 	for (int i = 0; i < iLength; i++)
 	{
@@ -18,7 +18,7 @@ void ARC_MODBUS_RTU_RxWork_s(ARC_MODUBS_RTU_HandleTypeDef* iModbusHandel, char* 
 	}
 }
 
-void ARC_MODBUS_RTU_RxWork(ARC_MODUBS_RTU_HandleTypeDef* iModbusHandel, char iByte)
+void ARC_MODBUS_RTU_RxWork(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel, char iByte)
 {
 
 }
