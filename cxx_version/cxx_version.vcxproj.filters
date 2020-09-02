@@ -18,5 +18,43 @@
     <ClCompile Include="main.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
+    <ClCompile Include="ARC_Modbus\ARC_Modbus.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="ARC_Modbus\ARC_Modbus_Decoder.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="ARC_Modbus\ARC_Modbus_Encoder.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="ARC_Modbus\ARC_Modbus_Request.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="ARC_Modbus\ARC_Modbus_Response.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="ARC_Modbus\ARC_Modbus_Struct.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ARC_Modbus\ARC_Modbus.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="ARC_Modbus\ARC_Modbus_Decoder.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="ARC_Modbus\ARC_Modbus_Encoder.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="ARC_Modbus\ARC_Modbus_Request.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="ARC_Modbus\ARC_Modbus_Response.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="ARC_Modbus\ARC_Modbus_Struct.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
