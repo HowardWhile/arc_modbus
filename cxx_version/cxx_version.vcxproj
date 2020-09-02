@@ -150,6 +150,7 @@
     <ClCompile Include="ARC_Modbus\ARC_Modbus_Response.cpp" />
     <ClCompile Include="ARC_Modbus\ARC_Modbus_Struct.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mbRegisterMapping.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ARC_Modbus\ARC_Modbus.h" />
@@ -158,6 +159,7 @@
     <ClInclude Include="ARC_Modbus\ARC_Modbus_Request.h" />
     <ClInclude Include="ARC_Modbus\ARC_Modbus_Response.h" />
     <ClInclude Include="ARC_Modbus\ARC_Modbus_Struct.h" />
+    <ClInclude Include="mbRegisterMapping.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

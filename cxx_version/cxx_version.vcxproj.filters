@@ -36,6 +36,9 @@
     <ClCompile Include="ARC_Modbus\ARC_Modbus_Struct.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
+    <ClCompile Include="mbRegisterMapping.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ARC_Modbus\ARC_Modbus.h">
@@ -54,6 +57,9 @@
       <Filter>標頭檔</Filter>
     </ClInclude>
     <ClInclude Include="ARC_Modbus\ARC_Modbus_Struct.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="mbRegisterMapping.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
   </ItemGroup>
