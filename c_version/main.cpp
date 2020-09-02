@@ -1,10 +1,11 @@
 ﻿// c_version.cpp : 此檔案包含 'main' 函式。程式會於該處開始執行及結束執行。
 //
 
-#include <stdio.h>
+#include <iostream>
+
 int main()
 {
-	printf("Hello World! from c version\n");
+    std::cout << "Hello World!\n";
 }
 
 // 執行程式: Ctrl + F5 或 [偵錯] > [啟動但不偵錯] 功能表
