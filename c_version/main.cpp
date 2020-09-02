@@ -2,8 +2,12 @@
 //
 
 #include <iostream>
+#include "ARC_Modbus.h"
 
 int main()
 {
+    ARC_MODUBS_RTU_HandleTypeDef modbus_slave;
+    ARC_MODBUS_RTU_Initial(&modbus_slave, 1);
+
     std::cout << "Hello World!\n";
 }

@@ -1,19 +1,39 @@
 ﻿#ifndef ARC_Modbus_Struct_h__
 #define ARC_Modbus_Struct_h__
 
-#define ARC_Modbus_RTU_ENABLED                          ( 1 )
-#define ARC_Modbus_ASCII_ENABLED                        ( 0 ) // 待測試
-#define ARC_Modbus_TCP_ENABLED                          ( 0 ) // 待測試
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "ARC_Modbus_Decoder.h"
-#include "ARC_Modbus_Encoder.h"
+#define ARC_Modbus_RTU_ENABLED                          ( 1 )
+#define ARC_Modbus_ASCII_ENABLED                        ( 0 ) // 待測試
+#define ARC_Modbus_TCP_ENABLED                          ( 0 ) // 待測試
+
 
 #include <stdint.h>
 #include <stdbool.h>
+
+	typedef enum
+	{
+		Ex_not_initial = -1,
+		Ex_none = 0,
+		Ex_IllegalFunction,
+		Ex_IllegalDataAddress,
+		Ex_IllegalDataValue,
+		Ex_SlaveDeviceFailure,
+		Ex_Acknowledge
+	}Exception;
+
+	typedef struct
+	{
+		/* -------------------------------------- */
+		// Event Function
+		/* -------------------------------------- */
+		void(*Event_TxWork)(char* iBytes, int iLength); // 有資料要傳遞
+		/* -------------------------------------- */
+		// Callback Function
+		/* -------------------------------------- */
+	}ARC_MODUBS_FUNC_POINT;
 
 #if ARC_Modbus_RTU_ENABLED > 0
 	typedef struct
@@ -56,18 +76,20 @@ extern "C" {
 
 	typedef struct
 	{
+		//ARC_MODUBS_RTU_HandleTypeDef* context;
 		uint8_t slave_id;
 		ARC_MODUBS_RTU_Rx_HandleTypeDef rx_handler;
 		ARC_MODUBS_RTU_Tx_HandleTypeDef tx_handler;
+		ARC_MODUBS_FUNC_POINT interface; // 事件與callback的接口
 	}ARC_MODUBS_RTU_HandleTypeDef;
-
 
 #endif
 #if ARC_Modbus_ASCII_ENABLED > 0
-
+	// ...施工中
 #endif
-#if ARC_Modbus_Master_TCP_ENABLED > 0
 
+#if ARC_Modbus_Master_TCP_ENABLED > 0
+	// ...施工中
 #endif
 
 #ifdef __cplusplus
