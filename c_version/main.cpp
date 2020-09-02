@@ -4,7 +4,7 @@
 #include <stdio.h>
 int main()
 {
-	printf("Hello World! from c++ version\n");
+	printf("Hello World! from c version\n");
 }
 
 // 執行程式: Ctrl + F5 或 [偵錯] > [啟動但不偵錯] 功能表
