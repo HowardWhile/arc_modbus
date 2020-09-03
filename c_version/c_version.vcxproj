@@ -88,6 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>.\ARC_Modbus</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -102,6 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>.\ARC_Modbus</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,7 +141,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ARC_Modbus\ARC_Modbus.c" />
+    <ClCompile Include="ARC_Modbus\ARC_Modbus_Decoder.c" />
+    <ClCompile Include="ARC_Modbus\ARC_Modbus_Encoder.c" />
+    <ClCompile Include="ARC_Modbus\ARC_Modbus_Struct.c" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ARC_Modbus\ARC_Modbus.h" />
+    <ClInclude Include="ARC_Modbus\ARC_Modbus_Decoder.h" />
+    <ClInclude Include="ARC_Modbus\ARC_Modbus_Encoder.h" />
+    <ClInclude Include="ARC_Modbus\ARC_Modbus_Struct.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
