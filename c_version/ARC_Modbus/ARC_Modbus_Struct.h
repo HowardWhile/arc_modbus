@@ -12,6 +12,15 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 
+// NULL define
+//#ifndef NULL
+//#ifdef __cplusplus
+//#define NULL 0
+//#else
+//#define NULL ((void *)0)
+//#endif
+//#endif
+
 // Modbus Packet Define
 #define INDEX_SLAVE_ID				0
 #define INDEX_FUNCTION_CODE			1
@@ -47,10 +56,40 @@ extern "C" {
 		/* -------------------------------------- */
 		// Event Function
 		/* -------------------------------------- */
-		void(*Event_TxWork)(char* iBytes, int iLength); // 有資料要傳遞
+		void(*Event_TxWork)(void* iContext, char* iBytes, int iLength); // 有資料要傳遞
 		/* -------------------------------------- */
 		// Callback Function
 		/* -------------------------------------- */
+		/* Coils Status Function code 01,(0x) */
+		Exception(*CallBack_Coils)(
+			char* regBuffer,		// 傳遞的資料 8個bit拼成 1個byte
+			unsigned short iAddress,// 0~FFFF
+			unsigned short iNumber, // 線圈數量 (max:2000)
+			bool IsWrite			// 告知讀取或者寫入暫存器
+			);
+
+		/* Coils Status Function code 02,(1x) */
+		Exception(*CallBack_InputCoils)(
+			char* regBuffer,		// 傳遞的資料 8個bit拼成 1個byte
+			unsigned short iAddress,// 0~FFFF
+			unsigned short iNumber	// 線圈數量 (max:2000)
+			);
+
+		/* Coils Status Function code 03,(4x) */
+		Exception(*CallBack_Register)(
+			char* regBuffer,		// 傳遞的資料 1個數值會由 2個byte拼成
+			unsigned short iAddress,// 0~FFFF
+			unsigned short iNumber,	// 數值數量 (max:125)
+			bool IsWrite			// 告知讀取或者寫入暫存器
+			);
+
+		/* Coils Status Function code 04,(3x) */
+		Exception(*CallBack_InputRegs)(
+			char* regBuffer,		// 傳遞的資料 1個數值會由 2個byte拼成
+			unsigned short iAddress,// 0~FFFF
+			unsigned short iNumber	// 數值數量 (max:125)
+			);
+
 	}ARC_MODBUS_FunctionPoint;
 
 	typedef struct
