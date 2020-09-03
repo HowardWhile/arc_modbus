@@ -9,11 +9,19 @@ extern "C" {
 
 #if ARC_Modbus_RTU_ENABLED > 0
 
-	void ARC_MODBUS_RTU_Initial(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel, uint8_t iSlaveID);	
-	void ARC_MODBUS_RTU_InitialInterface(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel, void* iEvent_TxWork);
+	void ARC_MODBUS_RTU_Initial(
+		ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel,
+		uint8_t iSlaveID);	
+
+	void ARC_MODBUS_RTU_InitialInterface(
+		ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel, 
+		void* iEvent_TxWork,
+		void* iCallBack_Coils,
+		void* iCallBack_InputCoils,
+		void* iCallBack_Register,
+		void* iCallBack_InputRegs);
 
 	void ARC_MODBUS_RTU_RxWorkEx(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel, char* iBytes, int iLength);
-	void ARC_MODBUS_RTU_RxWork(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel, char iByte);
 
 #endif
 #if ARC_Modbus_ASCII_ENABLED > 0

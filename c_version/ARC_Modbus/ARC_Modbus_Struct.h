@@ -49,7 +49,7 @@ extern "C" {
 		Ex_IllegalDataValue,
 		Ex_SlaveDeviceFailure,
 		Ex_Acknowledge
-	}Exception;
+	}ARCMODBUS_Exception;
 
 	typedef struct
 	{
@@ -61,7 +61,8 @@ extern "C" {
 		// Callback Function
 		/* -------------------------------------- */
 		/* Coils Status Function code 01,(0x) */
-		Exception(*CallBack_Coils)(
+		ARCMODBUS_Exception(*CallBack_Coils)(
+			void* iContext,
 			char* regBuffer,		// 傳遞的資料 8個bit拼成 1個byte
 			unsigned short iAddress,// 0~FFFF
 			unsigned short iNumber, // 線圈數量 (max:2000)
@@ -69,14 +70,16 @@ extern "C" {
 			);
 
 		/* Coils Status Function code 02,(1x) */
-		Exception(*CallBack_InputCoils)(
+		ARCMODBUS_Exception(*CallBack_InputCoils)(
+			void* iContext,
 			char* regBuffer,		// 傳遞的資料 8個bit拼成 1個byte
 			unsigned short iAddress,// 0~FFFF
 			unsigned short iNumber	// 線圈數量 (max:2000)
 			);
 
 		/* Coils Status Function code 03,(4x) */
-		Exception(*CallBack_Register)(
+		ARCMODBUS_Exception(*CallBack_Register)(
+			void* iContext,
 			char* regBuffer,		// 傳遞的資料 1個數值會由 2個byte拼成
 			unsigned short iAddress,// 0~FFFF
 			unsigned short iNumber,	// 數值數量 (max:125)
@@ -84,7 +87,8 @@ extern "C" {
 			);
 
 		/* Coils Status Function code 04,(3x) */
-		Exception(*CallBack_InputRegs)(
+		ARCMODBUS_Exception(*CallBack_InputRegs)(
+			void* iContext,
 			char* regBuffer,		// 傳遞的資料 1個數值會由 2個byte拼成
 			unsigned short iAddress,// 0~FFFF
 			unsigned short iNumber	// 數值數量 (max:125)
