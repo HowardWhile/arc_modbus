@@ -26,6 +26,11 @@ bool ARC_MODBUS_RTU_Decoder_RxByte(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel, 
 	return false;
 }
 
+char* ARC_MODBUS_RTU_GetMultipleWrite(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel)
+{
+	return iModbusHandel->rx_handler.rx_buffer_1516 + INDEX_DATA_START_w;
+}
+
 bool ARC_MODBUS_RTU_function0106_decoder(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel, char iByte)
 {
 	ARC_MODBUS_RTU_Rx_HandleTypeDef* h_rx = &iModbusHandel->rx_handler;

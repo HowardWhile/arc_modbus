@@ -14,24 +14,27 @@ void ARC_MODBUS_RTU_pkg_make_exception(ARC_MODBUS_RTU_HandleTypeDef* iModbusHand
 void ARC_MODBUS_RTU_pkg_make_function_read(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel, int iFunctionCode, int iRegsNumber, char* iRegBuffer);
 void ARC_MODBUS_RTU_pkg_make_function_write(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel, int iFunctionCode, int iAddress, int iParameter);
 
-void ARC_MODBUS_RTU_GetResponse(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel, char* iRegBuffer, const ARC_MODBUS_CommandParameter iPara, ARC_MODBUS_Exception iError /* exceptions 錯誤訊息 */)
+void ARC_MODBUS_RTU_PacketMake(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel, ARC_MODBUS_Exception iError)
 {
+	ARC_MODBUS_CommandParameter* iPara = &iModbusHandel->rx_handler.result;
+	char* iRegBuffer = iModbusHandel->reg_buffer;
+
 	if (iError != Ex_none)
 	{//有錯誤訊息 製作相對應的例外訊息
-		ARC_MODBUS_RTU_pkg_make_exception(iModbusHandel, iPara.FunctionCode, iError);
+		ARC_MODBUS_RTU_pkg_make_exception(iModbusHandel, iPara->FunctionCode, iError);
 	}
 	else
 	{
-		int function_code = iPara.FunctionCode;
+		int function_code = iPara->FunctionCode;
 		if (function_code == 1 || function_code == 2 || function_code == 3 || function_code == 4)
 		{
 			// 讀取
-			ARC_MODBUS_RTU_pkg_make_function_read(iModbusHandel, function_code, iPara.Parameter, iRegBuffer);
+			ARC_MODBUS_RTU_pkg_make_function_read(iModbusHandel, function_code, iPara->Parameter, iRegBuffer);
 		}
 		else
 		{
 			// 寫入
-			ARC_MODBUS_RTU_pkg_make_function_write(iModbusHandel, function_code, iPara.DataAddres, iPara.Parameter);
+			ARC_MODBUS_RTU_pkg_make_function_write(iModbusHandel, function_code, iPara->DataAddres, iPara->Parameter);
 		}
 	}
 }

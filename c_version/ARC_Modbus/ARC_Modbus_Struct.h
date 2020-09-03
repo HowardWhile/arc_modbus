@@ -133,7 +133,7 @@ extern "C" {
 		bool buffer_enable;
 
 		// decode result
-		ARC_MODBUS_CommandParameter result;
+		ARC_MODBUS_CommandParameter result; // 解碼成功後 解碼的結果放這邊
 
 	}ARC_MODBUS_RTU_Rx_HandleTypeDef;
 
@@ -149,12 +149,13 @@ extern "C" {
 		char tx_msg_buffer[255];
 		uint16_t tx_msg_length;
 
-	}ARC_MODBUS_RTU_Tx_HandleTypeDef;
+	}ARC_MODBUS_RTU_Tx_HandleTypeDef; // 回應的封包結構
 
 	typedef struct
 	{
 		//ARC_MODUBS_RTU_HandleTypeDef* context;
 		uint8_t slave_id;
+		char reg_buffer[250]; // 線圈最多2000(bit) 數值最多125(short) => size = 250(byte)
 		ARC_MODBUS_RTU_Rx_HandleTypeDef rx_handler;
 		ARC_MODBUS_RTU_Tx_HandleTypeDef tx_handler;
 		ARC_MODBUS_FunctionPoint interface; // 事件與callback的接口
