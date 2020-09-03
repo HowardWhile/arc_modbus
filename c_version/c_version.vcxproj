@@ -146,12 +146,16 @@
     <ClCompile Include="ARC_Modbus\ARC_Modbus_Encoder.c" />
     <ClCompile Include="ARC_Modbus\ARC_Modbus_Struct.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mbRegisterDef.c" />
+    <ClCompile Include="mbRegisterProcess.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ARC_Modbus\ARC_Modbus.h" />
     <ClInclude Include="ARC_Modbus\ARC_Modbus_Decoder.h" />
     <ClInclude Include="ARC_Modbus\ARC_Modbus_Encoder.h" />
     <ClInclude Include="ARC_Modbus\ARC_Modbus_Struct.h" />
+    <ClInclude Include="mbRegisterDef.h" />
+    <ClInclude Include="mbRegisterProcess.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
