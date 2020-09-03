@@ -53,10 +53,10 @@ int main()
 	printf("modbus_slave(0x%p) (%d ms) [Initial] size: %d byte\r\n", &modbus_slave, clock(), sizeof(modbus_slave));
 
 	char pkg_FC03_a[] = { 0x01, 0x03, 0x00, 0x00, 0x00, 0x0A, 0xC5, 0xCD }; // FC03 address 0 size 10
-	ARC_MODBUS_RTU_RxWorkEx(&modbus_slave, pkg_FC03_a, sizeof(pkg_FC03_a));
+	ARC_MODBUS_RTU_RxWork(&modbus_slave, pkg_FC03_a, sizeof(pkg_FC03_a));
 
 	char pkg_FC03_b[] = { 0x01, 0x03, 0x00, 0x00, 0x00, 0x64, 0x44, 0x21 }; // FC03 address 0 size 100
-	ARC_MODBUS_RTU_RxWorkEx(&modbus_slave, pkg_FC03_b, sizeof(pkg_FC03_b));
+	ARC_MODBUS_RTU_RxWork(&modbus_slave, pkg_FC03_b, sizeof(pkg_FC03_b));
 
 	std::cout << "Hello World!\n";
 }

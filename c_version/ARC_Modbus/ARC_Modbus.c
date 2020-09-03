@@ -3,7 +3,7 @@
 #include "ARC_Modbus_Encoder.h"
 
 #if ARC_Modbus_RTU_ENABLED > 0
-void ARC_MODBUS_RTU_RxWork(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel, char iByte);
+void ARC_MODBUS_RTU_RxByte(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel, char iByte);
 
 void ARC_MODBUS_RTU_Initial(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel, uint8_t iSlaveID)
 {
@@ -22,11 +22,11 @@ void ARC_MODBUS_RTU_InitialInterface(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel
 	iModbusHandel->interface.CallBack_Register = iCallBack_Register;
 }
 
-void ARC_MODBUS_RTU_RxWorkEx(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel, char* iBytes, int iLength)
+void ARC_MODBUS_RTU_RxWork(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel, char* iBytes, int iLength)
 {
 	for (int i = 0; i < iLength; i++)
 	{
-		ARC_MODBUS_RTU_RxWork(iModbusHandel, iBytes[iLength]);
+		ARC_MODBUS_RTU_RxByte(iModbusHandel, iBytes[iLength]);
 	}
 
 	if (iModbusHandel->interface.Event_TxWork != NULL)
@@ -35,7 +35,7 @@ void ARC_MODBUS_RTU_RxWorkEx(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel, char* 
 	}
 }
 
-void ARC_MODBUS_RTU_RxWork(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel, char iByte)
+void ARC_MODBUS_RTU_RxByte(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel, char iByte)
 {
 
 }

@@ -21,7 +21,7 @@ extern "C" {
 		void* iCallBack_Register,
 		void* iCallBack_InputRegs);
 
-	void ARC_MODBUS_RTU_RxWorkEx(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel, char* iBytes, int iLength);
+	void ARC_MODBUS_RTU_RxWork(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel, char* iBytes, int iLength);
 
 #endif
 #if ARC_Modbus_ASCII_ENABLED > 0
