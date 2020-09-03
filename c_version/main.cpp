@@ -77,7 +77,7 @@ ARC_MODBUS_Exception Coils_CB(void* iContext, char* regBuffer, /* 傳遞的資�
 	printf("modbus_slave(0x%p) (%d ms) [RW Coils (01,0x)] addr[%d:%d](%d)\r\n", iContext, clock(), iAddress, iNumber, IsWrite);
 	ARC_MODBUS_Exception err = ARC_MODBUS_Exception::Ex_none;
 	/* ---------------------------------- */
-	if (mbRegister_RW_Bits(&mb_reg, regBuffer, iAddress, iNumber, IsWrite))
+	if (!mbRegister_RW_Bits(&mb_reg, regBuffer, iAddress, iNumber, IsWrite))
 	{
 		err = ARC_MODBUS_Exception::Ex_IllegalDataAddress;
 	}	
@@ -91,7 +91,7 @@ ARC_MODBUS_Exception InputCoils_CB(void* iContext, char* regBuffer, /* 傳遞的
 	printf("modbus_slave(0x%p) (%d ms) [RO Coils(02,1x)] addr[%d:%d]\r\n", iContext, clock(), iAddress, iNumber);
 	ARC_MODBUS_Exception err = ARC_MODBUS_Exception::Ex_none;
 	/* ---------------------------------- */
-	if (mbRegister_RO_Bits(&mb_reg, regBuffer, iAddress, iNumber))
+	if (!mbRegister_RO_Bits(&mb_reg, regBuffer, iAddress, iNumber))
 	{
 		err = ARC_MODBUS_Exception::Ex_IllegalDataAddress;
 	}
@@ -105,7 +105,7 @@ ARC_MODBUS_Exception Register_CB(void* iContext, char* regBuffer, /* 傳遞的�
 	printf("modbus_slave(0x%p) (%d ms) [RW Regs(03,4x)] addr[%d:%d](%d)\r\n", iContext, clock(), iAddress, iNumber, IsWrite);
 	ARC_MODBUS_Exception err = ARC_MODBUS_Exception::Ex_none;
 	/* ---------------------------------- */
-	if (mbRegister_RW_Regs(&mb_reg, regBuffer, iAddress, iNumber, IsWrite))
+	if (!mbRegister_RW_Regs(&mb_reg, regBuffer, iAddress, iNumber, IsWrite))
 	{
 		err = ARC_MODBUS_Exception::Ex_IllegalDataAddress;
 	}
@@ -119,7 +119,7 @@ ARC_MODBUS_Exception InputRegs_CB(void* iContext, char* regBuffer, /* 傳遞的�
 	printf("modbus_slave(0x%p) (%d ms) [RO Regs(04,3x)] addr[%d:%d]\r\n", iContext, clock(), iAddress, iNumber);
 	ARC_MODBUS_Exception err = ARC_MODBUS_Exception::Ex_none;
 	/* ---------------------------------- */
-	if (mbRegister_RO_Regs(&mb_reg, regBuffer, iAddress, iNumber))
+	if (!mbRegister_RO_Regs(&mb_reg, regBuffer, iAddress, iNumber))
 	{
 		err = ARC_MODBUS_Exception::Ex_IllegalDataAddress;
 	}
