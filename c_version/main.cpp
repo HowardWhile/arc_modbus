@@ -8,7 +8,7 @@
 
 void TxWork(void* iContext, char* iBytes, int iLength);
 
-ARCMODBUS_Exception Coils_CB(
+ARC_MODBUS_Exception Coils_CB(
 	void* iContext,
 	char* regBuffer,		// 傳遞的資料 8個bit拼成 1個byte
 	unsigned short iAddress,// 0~FFFF
@@ -17,7 +17,7 @@ ARCMODBUS_Exception Coils_CB(
 	);
 
 /* Coils Status Function code 02,(1x) */
-ARCMODBUS_Exception InputCoils_CB(
+ARC_MODBUS_Exception InputCoils_CB(
 	void* iContext,
 	char* regBuffer,		// 傳遞的資料 8個bit拼成 1個byte
 	unsigned short iAddress,// 0~FFFF
@@ -27,7 +27,7 @@ ARCMODBUS_Exception InputCoils_CB(
 
 
 /* Coils Status Function code 03,(4x) */
-ARCMODBUS_Exception Register_CB(
+ARC_MODBUS_Exception Register_CB(
 	void* iContext,
 	char* regBuffer,		// 傳遞的資料 1個數值會由 2個byte拼成
 	unsigned short iAddress,// 0~FFFF
@@ -38,7 +38,7 @@ ARCMODBUS_Exception Register_CB(
 
 
 /* Coils Status Function code 04,(3x) */
-ARCMODBUS_Exception InputRegs_CB(
+ARC_MODBUS_Exception InputRegs_CB(
 	void* iContext,
 	char* regBuffer,		// 傳遞的資料 1個數值會由 2個byte拼成
 	unsigned short iAddress,// 0~FFFF
@@ -69,25 +69,25 @@ void TxWork(void* iContext, char* iBytes, int iLength)
 	printf("\r\n");
 }
 
-ARCMODBUS_Exception Coils_CB(void* iContext, char* regBuffer, /* 傳遞的資料 8個bit拼成 1個byte */ unsigned short iAddress,/* 0~FFFF */ unsigned short iNumber, /* 線圈數量 (max:2000) */ bool IsWrite /* 告知讀取或者寫入暫存器 */)
+ARC_MODBUS_Exception Coils_CB(void* iContext, char* regBuffer, /* 傳遞的資料 8個bit拼成 1個byte */ unsigned short iAddress,/* 0~FFFF */ unsigned short iNumber, /* 線圈數量 (max:2000) */ bool IsWrite /* 告知讀取或者寫入暫存器 */)
 {
-	return ARCMODBUS_Exception::Ex_IllegalFunction;
+	return ARC_MODBUS_Exception::Ex_IllegalFunction;
 
 }
 
-ARCMODBUS_Exception InputCoils_CB(void* iContext, char* regBuffer, /* 傳遞的資料 8個bit拼成 1個byte */ unsigned short iAddress,/* 0~FFFF */ unsigned short iNumber /* 線圈數量 (max:2000) */)
+ARC_MODBUS_Exception InputCoils_CB(void* iContext, char* regBuffer, /* 傳遞的資料 8個bit拼成 1個byte */ unsigned short iAddress,/* 0~FFFF */ unsigned short iNumber /* 線圈數量 (max:2000) */)
 {
-	return ARCMODBUS_Exception::Ex_IllegalFunction;
+	return ARC_MODBUS_Exception::Ex_IllegalFunction;
 
 }
 
-ARCMODBUS_Exception Register_CB(void* iContext, char* regBuffer, /* 傳遞的資料 1個數值會由 2個byte拼成 */ unsigned short iAddress,/* 0~FFFF */ unsigned short iNumber, /* 數值數量 (max:125) */ bool IsWrite /* 告知讀取或者寫入暫存器 */)
+ARC_MODBUS_Exception Register_CB(void* iContext, char* regBuffer, /* 傳遞的資料 1個數值會由 2個byte拼成 */ unsigned short iAddress,/* 0~FFFF */ unsigned short iNumber, /* 數值數量 (max:125) */ bool IsWrite /* 告知讀取或者寫入暫存器 */)
 {
-	return ARCMODBUS_Exception::Ex_IllegalFunction;
+	return ARC_MODBUS_Exception::Ex_IllegalFunction;
 }
 
-ARCMODBUS_Exception InputRegs_CB(void* iContext, char* regBuffer, /* 傳遞的資料 1個數值會由 2個byte拼成 */ unsigned short iAddress,/* 0~FFFF */ unsigned short iNumber /* 數值數量 (max:125) */)
+ARC_MODBUS_Exception InputRegs_CB(void* iContext, char* regBuffer, /* 傳遞的資料 1個數值會由 2個byte拼成 */ unsigned short iAddress,/* 0~FFFF */ unsigned short iNumber /* 數值數量 (max:125) */)
 {
-	return ARCMODBUS_Exception::Ex_IllegalFunction;
+	return ARC_MODBUS_Exception::Ex_IllegalFunction;
 
 }

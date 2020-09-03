@@ -49,7 +49,7 @@ extern "C" {
 		Ex_IllegalDataValue,
 		Ex_SlaveDeviceFailure,
 		Ex_Acknowledge
-	}ARCMODBUS_Exception;
+	}ARC_MODBUS_Exception;
 
 	typedef struct
 	{
@@ -61,7 +61,7 @@ extern "C" {
 		// Callback Function
 		/* -------------------------------------- */
 		/* Coils Status Function code 01,(0x) */
-		ARCMODBUS_Exception(*CallBack_Coils)(
+		ARC_MODBUS_Exception(*CallBack_Coils)(
 			void* iContext,
 			char* regBuffer,		// 傳遞的資料 8個bit拼成 1個byte
 			unsigned short iAddress,// 0~FFFF
@@ -70,7 +70,7 @@ extern "C" {
 			);
 
 		/* Coils Status Function code 02,(1x) */
-		ARCMODBUS_Exception(*CallBack_InputCoils)(
+		ARC_MODBUS_Exception(*CallBack_InputCoils)(
 			void* iContext,
 			char* regBuffer,		// 傳遞的資料 8個bit拼成 1個byte
 			unsigned short iAddress,// 0~FFFF
@@ -78,7 +78,7 @@ extern "C" {
 			);
 
 		/* Coils Status Function code 03,(4x) */
-		ARCMODBUS_Exception(*CallBack_Register)(
+		ARC_MODBUS_Exception(*CallBack_Register)(
 			void* iContext,
 			char* regBuffer,		// 傳遞的資料 1個數值會由 2個byte拼成
 			unsigned short iAddress,// 0~FFFF
@@ -87,7 +87,7 @@ extern "C" {
 			);
 
 		/* Coils Status Function code 04,(3x) */
-		ARCMODBUS_Exception(*CallBack_InputRegs)(
+		ARC_MODBUS_Exception(*CallBack_InputRegs)(
 			void* iContext,
 			char* regBuffer,		// 傳遞的資料 1個數值會由 2個byte拼成
 			unsigned short iAddress,// 0~FFFF
@@ -147,6 +147,8 @@ extern "C" {
 		// 2 byte, crc16
 		// sum: 6~255 byte
 		char tx_msg_buffer[255];
+		uint16_t tx_msg_length;
+
 	}ARC_MODBUS_RTU_Tx_HandleTypeDef;
 
 	typedef struct

@@ -5,8 +5,15 @@
 extern "C" {
 #endif
 
-#if ARC_Modbus_RTU_ENABLED > 0
+#include "ARC_Modbus_Struct.h"
 
+#if ARC_Modbus_RTU_ENABLED > 0
+	void ARC_MODBUS_RTU_GetResponse(
+		ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel,
+		char* iRegBuffer,
+		const ARC_MODBUS_CommandParameter iPara,
+		ARC_MODBUS_Exception iError /* exceptions 錯誤訊息 */
+	);
 #endif
 #if ARC_Modbus_ASCII_ENABLED > 0
 
