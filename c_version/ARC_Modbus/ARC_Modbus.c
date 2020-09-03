@@ -2,6 +2,8 @@
 #include "ARC_Modbus_Decoder.h"
 #include "ARC_Modbus_Encoder.h"
 
+#include <string.h>
+
 typedef union
 {
 	short wValue;
@@ -30,9 +32,9 @@ void ARC_MODBUS_RTU_InitialInterface(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel
 
 void ARC_MODBUS_RTU_RxWork(ARC_MODBUS_RTU_HandleTypeDef* iModbusHandel, char* iBytes, int iLength)
 {
-	for (int i = 0; i < iLength; i++)
+	for (int idx = 0; idx < iLength; idx++)
 	{
-		ARC_MODBUS_RTU_RxByte(iModbusHandel, iBytes[iLength]);
+		ARC_MODBUS_RTU_RxByte(iModbusHandel, iBytes[idx]);
 	}
 }
 
