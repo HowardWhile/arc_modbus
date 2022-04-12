@@ -3,7 +3,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-
 namespace ARC_Modbus
 {
 #if ARC_Modbus_RTU_ENABLED > 0
@@ -14,7 +13,6 @@ namespace ARC_Modbus
 
 	Decoder_RTU::~Decoder_RTU()
 	{
-
 	}
 
 	bool Decoder_RTU::RxByte(char iByte)
@@ -72,7 +70,6 @@ namespace ARC_Modbus
 			this->byte_index++;
 			this->rx_buffer_1516[this->buffer_index++] = iByte;
 
-
 			if (this->byte_index >= 255)
 			{
 				this->buffer_enable = false;
@@ -81,8 +78,8 @@ namespace ARC_Modbus
 			{
 				// index 6: The number of data bytes to follow
 				if (this->byte_index == (unsigned char)this->rx_buffer_1516[6] + 2) // 2: crc16 size
-				{// 收取定義的長度
-				 // 確認 crc16
+				{																	// 收取定義的長度
+				  // 確認 crc16
 					tu_convert16 cTool;
 					cTool.wValue = CRC16(this->rx_buffer_1516, this->buffer_index - 2);
 					if (cTool.cValue[0] == this->rx_buffer_1516[this->buffer_index - 2] &&
@@ -139,7 +136,7 @@ namespace ARC_Modbus
 
 		unsigned char function_code = this->rx_buffer_1516_head[INDEX_FUNCTION_CODE];
 		if (this->rx_buffer_1516_head[0] == this->slave_id && /* Slave ID正確 */
-			(function_code == 15 || function_code == 16))/* Function Code正確 */
+			(function_code == 15 || function_code == 16))	  /* Function Code正確 */
 		{
 			tu_convert16 cTool;
 
@@ -166,7 +163,7 @@ namespace ARC_Modbus
 		return false;
 	}
 
-	char* Decoder_RTU::GetRegsBuffer(void)
+	char *Decoder_RTU::GetRegsBuffer(void)
 	{
 		return this->rx_buffer_1516 + INDEX_DATA_START_w;
 	}
@@ -175,32 +172,30 @@ namespace ARC_Modbus
 #if ARC_Modbus_ASCII_ENABLED > 0
 	Decoder_ASCII::Decoder_ASCII()
 	{
-
 	}
 
 	Decoder_ASCII::~Decoder_ASCII()
 	{
-
 	}
 
 	bool Decoder_ASCII::RxByte(char iByte)
 	{
-		//printf("%c", iByte);
+		// printf("%c", iByte);
 		if (this->buffer_enable)
 		{
 			this->rx_buffer[this->buffer_index++] = iByte;
 			if (this->check_end(iByte) == true) /* "\r\n" */
 			{
 				//接收到一組命令(有開始字元':' 結束字元"\r\n")
-				if (this->buffer_index >= 17 &&  //最短的命令是17個字
-					this->hexStr2Byte(this->rx_buffer + 1) == this->slave_id)// 判斷ID是否是本身
+				if (this->buffer_index >= 17 &&								  //最短的命令是17個字
+					this->hexStr2Byte(this->rx_buffer + 1) == this->slave_id) // 判斷ID是否是本身
 				{
 					int idx_check_sum_str = this->buffer_index - 4;
 					unsigned char check_sum = LRC_String(this->rx_buffer + 1, idx_check_sum_str - 1);
 
-					//printf("[Debug] LRC: 0x%X\r\n", check_sum);
+					// printf("[Debug] LRC: 0x%X\r\n", check_sum);
 					if (check_sum == this->hexStr2Byte(this->rx_buffer + idx_check_sum_str))
-					{// LRC 檢查通過
+					{																 // LRC 檢查通過
 						this->FunctionCode = this->hexStr2Byte(this->rx_buffer + 3); // 3 = INDEX_FUNCTION_CODE * 2 + 1
 						if (this->check_0106_packet())
 						{
@@ -251,7 +246,7 @@ namespace ARC_Modbus
 		return false;
 	}
 
-	char* Decoder_ASCII::GetRegsBuffer(void)
+	char *Decoder_ASCII::GetRegsBuffer(void)
 	{
 
 		return this->reg_buffer;
@@ -259,8 +254,8 @@ namespace ARC_Modbus
 
 	bool Decoder_ASCII::check_end(char iByte)
 	{
-		//memmove(this->check_end_buffer, this->check_end_buffer + 1, sizeof(this->check_end_buffer));
-		//this->check_end_buffer[sizeof(check_end_buffer) - 1] = iByte;
+		// memmove(this->check_end_buffer, this->check_end_buffer + 1, sizeof(this->check_end_buffer));
+		// this->check_end_buffer[sizeof(check_end_buffer) - 1] = iByte;
 		this->check_end_buffer[0] = this->check_end_buffer[1];
 		this->check_end_buffer[1] = iByte;
 		if (this->check_end_buffer[0] == '\r' && this->check_end_buffer[1] == '\n')
@@ -300,7 +295,7 @@ namespace ARC_Modbus
 			// Data Address
 			this->DataAddres = this->hexStr2Word(this->rx_buffer + 5); // 5 = INDEX_DATA_ADDRESS * 2 + 1
 
-			// Parameter 
+			// Parameter
 			// (Function code = 1,2,3,4 : The total number of requested)
 			// (Function code = 5,6 : The status to write)
 			this->Parameter = this->hexStr2Word(this->rx_buffer + 9); // 9 = INDEX_PARAMETER * 2 + 1
@@ -337,20 +332,20 @@ namespace ARC_Modbus
 	bool Decoder_ASCII::make_reg_buffer(unsigned char iByteFollow, unsigned short iNumber2Write)
 	{
 		if (iByteFollow == (unsigned char)this->hexStr2Byte(this->rx_buffer + 13) && // 13 = INDEX_NUMBER_BYTES_FOLLOW *2  + 1
-			this->buffer_index == iByteFollow * 2 + 19) // 資料總長度也正確
+			this->buffer_index == iByteFollow * 2 + 19)								 // 資料總長度也正確
 		{
 			this->SlaveAddress = this->slave_id;
 
 			// Data Address
 			this->DataAddres = this->hexStr2Word(this->rx_buffer + 5); // 5 = INDEX_DATA_ADDRESS * 2 + 1
 
-			// Parameter 
+			// Parameter
 			this->Parameter = iNumber2Write;
 
 			// make reg buffer
 			for (int byte_idx = 0; byte_idx < iByteFollow; byte_idx++)
 			{
-				this->reg_buffer[byte_idx] = this->hexStr2Byte(this->rx_buffer + 15 + byte_idx * 2);// 15 =  INDEX_DATA_START * 2 + 1
+				this->reg_buffer[byte_idx] = this->hexStr2Byte(this->rx_buffer + 15 + byte_idx * 2); // 15 =  INDEX_DATA_START * 2 + 1
 			}
 
 			return true;
@@ -363,12 +358,11 @@ namespace ARC_Modbus
 #if ARC_Modbus_TCP_ENABLED > 0
 	Decoder_TCP::Decoder_TCP()
 	{
-
+		this->buffer_index = 0;
 	}
 
 	Decoder_TCP::~Decoder_TCP()
 	{
-
 	}
 
 	void Decoder_TCP::RxByte(char iByte)
@@ -379,7 +373,7 @@ namespace ARC_Modbus
 		}
 	}
 
-	char* Decoder_TCP::GetRegsBuffer(void)
+	char *Decoder_TCP::GetRegsBuffer(void)
 	{
 		static const int idx_data_start = LENGTH_MBAP_HEADER + INDEX_DATA_START_w;
 		return this->rx_buffer + idx_data_start;
@@ -420,12 +414,12 @@ namespace ARC_Modbus
 		static const int tcp_idx_function_code = LENGTH_MBAP_HEADER + INDEX_FUNCTION_CODE;
 		static const int tcp_idx_msg_len = INDEX_MESSAGE_LENGTH + 1;
 
-		if (this->buffer_index == 12 && // 01~06 的 封包長度一定是12
+		if (this->buffer_index == 12 &&							   // 01~06 的 封包長度一定是12
 			this->rx_buffer[tcp_idx_slave_id] == this->slave_id && // slave ID 正不正確
-			this->rx_buffer[tcp_idx_function_code] >= 1 && // Function Code 1~6
-			this->rx_buffer[tcp_idx_function_code] <= 6 && // Function Code 1~6
-			this->rx_buffer[tcp_idx_msg_len] == 6// 6 bytes to follow
-			)
+			this->rx_buffer[tcp_idx_function_code] >= 1 &&		   // Function Code 1~6
+			this->rx_buffer[tcp_idx_function_code] <= 6 &&		   // Function Code 1~6
+			this->rx_buffer[tcp_idx_msg_len] == 6				   // 6 bytes to follow
+		)
 		{
 			tu_convert16 cTool;
 			static const int tcp_idx_protocol_id_l = INDEX_PROTOCOL_ID + 1;
@@ -433,7 +427,7 @@ namespace ARC_Modbus
 			cTool.cValue[0] = this->rx_buffer[tcp_idx_protocol_id_l];
 			cTool.cValue[1] = this->rx_buffer[tcp_idx_protocol_id_h];
 			if (cTool.wValue == 0) // Protocol Identifier == 0
-			{ // 以上條件都成立 認定是 TCP Modbus Function Cdoe 01~06 之封包
+			{					   // 以上條件都成立 認定是 TCP Modbus Function Cdoe 01~06 之封包
 
 				// Transaction Identifier
 				static const int tcp_idx_trans_id_l = INDEX_TRANS_ID + 1;
@@ -448,7 +442,7 @@ namespace ARC_Modbus
 				// Function Code
 				this->FunctionCode = this->rx_buffer[tcp_idx_function_code];
 
-				// 位置	
+				// 位置
 				static const int tcp_idx_data_addr_l = LENGTH_MBAP_HEADER + INDEX_DATA_ADDRESS + 1;
 				static const int tcp_idx_data_addr_h = LENGTH_MBAP_HEADER + INDEX_DATA_ADDRESS;
 				cTool.cValue[0] = this->rx_buffer[tcp_idx_data_addr_l];
@@ -474,18 +468,18 @@ namespace ARC_Modbus
 		static const int tcp_idx_slave_id = LENGTH_MBAP_HEADER + INDEX_SLAVE_ID;
 		static const int tcp_idx_function_code = LENGTH_MBAP_HEADER + INDEX_FUNCTION_CODE;
 
-		if (this->buffer_index >= 14 && // 最少的資料長度是14 byte
+		if (this->buffer_index >= 14 &&							   // 最少的資料長度是14 byte
 			this->rx_buffer[tcp_idx_slave_id] == this->slave_id && // slave ID 正不正確
-			(this->rx_buffer[tcp_idx_function_code] == 15 || // Function Code 15
-				this->rx_buffer[tcp_idx_function_code] == 16) // Function Code 16
-			)
+			(this->rx_buffer[tcp_idx_function_code] == 15 ||	   // Function Code 15
+			 this->rx_buffer[tcp_idx_function_code] == 16)		   // Function Code 16
+		)
 		{
 			tu_convert16 cTool;
 			static const int tcp_idx_protocol_id_l = INDEX_PROTOCOL_ID + 1;
 			static const int tcp_idx_protocol_id_h = INDEX_PROTOCOL_ID;
 			cTool.cValue[0] = this->rx_buffer[tcp_idx_protocol_id_l];
 			cTool.cValue[1] = this->rx_buffer[tcp_idx_protocol_id_h];
-			if (cTool.wValue == 0) // Protocol Identifier == 0 
+			if (cTool.wValue == 0) // Protocol Identifier == 0
 			{
 				static const int tcp_idx_msg_len_l = INDEX_MESSAGE_LENGTH + 1;
 				static const int tcp_idx_msg_len_h = INDEX_MESSAGE_LENGTH;
@@ -537,7 +531,7 @@ namespace ARC_Modbus
 						// UnitID
 						this->SlaveAddress = this->slave_id;
 
-						// 位置	
+						// 位置
 						static const int tcp_idx_data_addr_l = LENGTH_MBAP_HEADER + INDEX_DATA_ADDRESS + 1;
 						static const int tcp_idx_data_addr_h = LENGTH_MBAP_HEADER + INDEX_DATA_ADDRESS;
 						cTool.cValue[0] = this->rx_buffer[tcp_idx_data_addr_l];
@@ -548,13 +542,13 @@ namespace ARC_Modbus
 						this->Parameter = number2written;
 						return true;
 
-					}//end of 以上條件都成立了 認定是 TCP Modbus Function Cdoe 15 or 16 之封包					
-				}//end of 確認長度是否吻合
-			}//end of if (cTool.wValue == 0)
-		}//end of 一拖拉庫封包正確性判斷
+					} // end of 以上條件都成立了 認定是 TCP Modbus Function Cdoe 15 or 16 之封包
+				}	  // end of 確認長度是否吻合
+			}		  // end of if (cTool.wValue == 0)
+		}			  // end of 一拖拉庫封包正確性判斷
 		return false;
 	}
 
-#endif	
+#endif
 
 }

@@ -11,7 +11,6 @@ namespace ARC_Modbus
 	{
 	}
 
-
 	RTU::~RTU()
 	{
 	}
@@ -22,16 +21,16 @@ namespace ARC_Modbus
 		this->ecoder.Initial(iSlaveID);
 	}
 
-	void RTU::RxWork(char* iBytes, int iLength)
-	{		
+	void RTU::RxWork(char *iBytes, int iLength)
+	{
 		for (int i = 0; i < iLength; i++)
 		{
-			 this->RxWork(iBytes[i]);
-		}		
+			this->RxWork(iBytes[i]);
+		}
 	}
 
 	void RTU::RxWork(char iByte)
-	{		
+	{
 		if (this->decoder.RxByte(iByte) == true)
 		{
 			Exception err = Ex_not_initial;
@@ -41,7 +40,7 @@ namespace ARC_Modbus
 			case 1: /* Function Code: 01 */
 				if (this->CallBack_Coils)
 				{
-					if (this->decoder.Parameter <= 2000)// 01 modbus協定表示 最大的線圈讀取數是2000
+					if (this->decoder.Parameter <= 2000) // 01 modbus協定表示 最大的線圈讀取數是2000
 					{
 						err = this->CallBack_Coils(
 							this->reg_buffer,
@@ -51,7 +50,7 @@ namespace ARC_Modbus
 					}
 					else
 					{
-						err = Ex_IllegalDataValue; // 
+						err = Ex_IllegalDataValue; //
 					}
 				}
 				break;
@@ -59,7 +58,7 @@ namespace ARC_Modbus
 			case 2: /* Function Code: 02 */
 				if (this->CallBack_InputCoils)
 				{
-					if (this->decoder.Parameter <= 2000)// 02 modbus協定表示 最大的線圈讀取數是2000
+					if (this->decoder.Parameter <= 2000) // 02 modbus協定表示 最大的線圈讀取數是2000
 					{
 						err = this->CallBack_InputCoils(
 							this->reg_buffer,
@@ -68,7 +67,7 @@ namespace ARC_Modbus
 					}
 					else
 					{
-						err = Ex_IllegalDataValue; // 
+						err = Ex_IllegalDataValue; //
 					}
 				}
 				break;
@@ -76,7 +75,7 @@ namespace ARC_Modbus
 			case 3: /* Function Code: 03 */
 				if (this->CallBack_Register)
 				{
-					if (this->decoder.Parameter <= 125)// modbus協定表示 最大的數值讀取數是125
+					if (this->decoder.Parameter <= 125) // modbus協定表示 最大的數值讀取數是125
 					{
 						err = this->CallBack_Register(
 							this->reg_buffer,
@@ -86,7 +85,7 @@ namespace ARC_Modbus
 					}
 					else
 					{
-						err = Ex_IllegalDataValue; // 
+						err = Ex_IllegalDataValue; //
 					}
 				}
 				break;
@@ -94,7 +93,7 @@ namespace ARC_Modbus
 			case 4: /* Function Code: 04 */
 				if (this->CallBack_InputRegs)
 				{
-					if (this->decoder.Parameter <= 125)// modbus協定表示 最大的數值讀取數是125
+					if (this->decoder.Parameter <= 125) // modbus協定表示 最大的數值讀取數是125
 					{
 						err = this->CallBack_InputRegs(
 							this->reg_buffer,
@@ -103,7 +102,7 @@ namespace ARC_Modbus
 					}
 					else
 					{
-						err = Ex_IllegalDataValue; // 
+						err = Ex_IllegalDataValue; //
 					}
 				}
 				break;
@@ -181,7 +180,7 @@ namespace ARC_Modbus
 						err = this->CallBack_Register(
 							this->reg_buffer,
 							this->decoder.DataAddres,
-							this->decoder.Parameter, // 16's Parameter is number of registers to write 
+							this->decoder.Parameter, // 16's Parameter is number of registers to write
 							true);
 					}
 					else
@@ -200,10 +199,10 @@ namespace ARC_Modbus
 			if (err != Ex_not_initial)
 			{
 				this->ecoder.GetResponse(
-					this->tx_msg_buffer, tx_msg_length,/* 回應的封包寫在這個buffer */
-					this->reg_buffer,	/* iFunctionCode = 01,02,03,04 會用到 */
-					this->decoder,		/* 把 decoder 的參數傳遞給 ecoder*/
-					err);				/* exceptions 錯誤訊息 */
+					this->tx_msg_buffer, tx_msg_length, /* 回應的封包寫在這個buffer */
+					this->reg_buffer,					/* iFunctionCode = 01,02,03,04 會用到 */
+					this->decoder,						/* 把 decoder 的參數傳遞給 ecoder*/
+					err);								/* exceptions 錯誤訊息 */
 			}
 			else
 			{
@@ -212,17 +211,17 @@ namespace ARC_Modbus
 #endif // DEBUG_CONTROL
 				err = Ex_IllegalFunction;
 				this->ecoder.GetResponse(
-					this->tx_msg_buffer, tx_msg_length,/* 回應的封包寫在這個buffer */
-					this->reg_buffer,	/* iFunctionCode = 01,02,03,04 會用到 */
-					this->decoder,		/* 把 decoder 的參數傳遞給 ecoder*/
-					err);				/* exceptions 錯誤訊息 */
+					this->tx_msg_buffer, tx_msg_length, /* 回應的封包寫在這個buffer */
+					this->reg_buffer,					/* iFunctionCode = 01,02,03,04 會用到 */
+					this->decoder,						/* 把 decoder 的參數傳遞給 ecoder*/
+					err);								/* exceptions 錯誤訊息 */
 			}
 
 			if (this->Event_TxWork && tx_msg_length > 0)
 			{
 				this->Event_TxWork(this->tx_msg_buffer, tx_msg_length);
 			}
-		}		
+		}
 	}
 
 #endif
@@ -230,12 +229,10 @@ namespace ARC_Modbus
 #if ARC_Modbus_ASCII_ENABLED > 0
 	ASCII::ASCII()
 	{
-
 	}
 
 	ASCII::~ASCII()
 	{
-
 	}
 
 	void ASCII::Initial(int iSlaveID)
@@ -244,7 +241,7 @@ namespace ARC_Modbus
 		this->ecoder.Initial(iSlaveID);
 	}
 
-	void ASCII::RxWork(char* iBytes, int iLength)
+	void ASCII::RxWork(char *iBytes, int iLength)
 	{
 		for (int i = 0; i < iLength; i++)
 		{
@@ -263,7 +260,7 @@ namespace ARC_Modbus
 			case 1: /* Function Code: 01 */
 				if (this->CallBack_Coils)
 				{
-					if (this->decoder.Parameter <= 2000)// 01 modbus協定表示 最大的線圈讀取數是2000
+					if (this->decoder.Parameter <= 2000) // 01 modbus協定表示 最大的線圈讀取數是2000
 					{
 						err = this->CallBack_Coils(
 							this->reg_buffer,
@@ -273,7 +270,7 @@ namespace ARC_Modbus
 					}
 					else
 					{
-						err = Ex_IllegalDataValue; // 
+						err = Ex_IllegalDataValue; //
 					}
 				}
 				break;
@@ -281,7 +278,7 @@ namespace ARC_Modbus
 			case 2: /* Function Code: 02 */
 				if (this->CallBack_InputCoils)
 				{
-					if (this->decoder.Parameter <= 2000)// 02 modbus協定表示 最大的線圈讀取數是2000
+					if (this->decoder.Parameter <= 2000) // 02 modbus協定表示 最大的線圈讀取數是2000
 					{
 						err = this->CallBack_InputCoils(
 							this->reg_buffer,
@@ -290,7 +287,7 @@ namespace ARC_Modbus
 					}
 					else
 					{
-						err = Ex_IllegalDataValue; // 
+						err = Ex_IllegalDataValue; //
 					}
 				}
 				break;
@@ -298,7 +295,7 @@ namespace ARC_Modbus
 			case 3: /* Function Code: 03 */
 				if (this->CallBack_Register)
 				{
-					if (this->decoder.Parameter <= 125)// modbus協定表示 最大的數值讀取數是125
+					if (this->decoder.Parameter <= 125) // modbus協定表示 最大的數值讀取數是125
 					{
 						err = this->CallBack_Register(
 							this->reg_buffer,
@@ -308,7 +305,7 @@ namespace ARC_Modbus
 					}
 					else
 					{
-						err = Ex_IllegalDataValue; // 
+						err = Ex_IllegalDataValue; //
 					}
 				}
 				break;
@@ -316,7 +313,7 @@ namespace ARC_Modbus
 			case 4: /* Function Code: 04 */
 				if (this->CallBack_InputRegs)
 				{
-					if (this->decoder.Parameter <= 125)// modbus協定表示 最大的數值讀取數是125
+					if (this->decoder.Parameter <= 125) // modbus協定表示 最大的數值讀取數是125
 					{
 						err = this->CallBack_InputRegs(
 							this->reg_buffer,
@@ -325,7 +322,7 @@ namespace ARC_Modbus
 					}
 					else
 					{
-						err = Ex_IllegalDataValue; // 
+						err = Ex_IllegalDataValue; //
 					}
 				}
 				break;
@@ -403,7 +400,7 @@ namespace ARC_Modbus
 						err = this->CallBack_Register(
 							this->reg_buffer,
 							this->decoder.DataAddres,
-							this->decoder.Parameter, // 16's Parameter is number of registers to write 
+							this->decoder.Parameter, // 16's Parameter is number of registers to write
 							true);
 					}
 					else
@@ -422,10 +419,10 @@ namespace ARC_Modbus
 			if (err != Ex_not_initial)
 			{
 				this->ecoder.GetResponse(
-					this->tx_msg_buffer, tx_msg_length,/* 回應的封包寫在這個buffer */
-					this->reg_buffer,	/* iFunctionCode = 01,02,03,04 會用到 */
-					this->decoder,		/* 把 decoder 的參數傳遞給 ecoder*/
-					err);				/* exceptions 錯誤訊息 */
+					this->tx_msg_buffer, tx_msg_length, /* 回應的封包寫在這個buffer */
+					this->reg_buffer,					/* iFunctionCode = 01,02,03,04 會用到 */
+					this->decoder,						/* 把 decoder 的參數傳遞給 ecoder*/
+					err);								/* exceptions 錯誤訊息 */
 			}
 			else
 			{
@@ -445,17 +442,16 @@ namespace ARC_Modbus
 #if ARC_Modbus_TCP_ENABLED > 0
 	TCP::TCP()
 	{
-
+		this->parent = NULL;
 	}
 
-	TCP::TCP(void* iContext)
+	TCP::TCP(void *iContext)
 	{
 		this->parent = iContext;
 	}
 
 	TCP::~TCP()
 	{
-
 	}
 
 	void TCP::Initial(int iSlaveID)
@@ -464,12 +460,13 @@ namespace ARC_Modbus
 		this->ecoder.Initial(iSlaveID);
 	}
 
-	void TCP::RxWork(char* iBytes, int iLength)
+	void TCP::RxWork(char *iBytes, int iLength)
 	{
 		for (int i = 0; i < iLength; i++)
 		{
 			this->RxWork(iBytes[i]);
 		}
+		this->FrameRenew();
 	}
 
 	void TCP::RxWork(char iByte)
@@ -488,7 +485,7 @@ namespace ARC_Modbus
 			case 1: /* Function Code: 01 */
 				if (this->CallBack_Coils)
 				{
-					if (this->decoder.Parameter <= 2000)// 01 modbus協定表示 最大的線圈讀取數是2000
+					if (this->decoder.Parameter <= 2000) // 01 modbus協定表示 最大的線圈讀取數是2000
 					{
 						err = this->CallBack_Coils(
 							this->parent,
@@ -499,7 +496,7 @@ namespace ARC_Modbus
 					}
 					else
 					{
-						err = Ex_IllegalDataValue; // 
+						err = Ex_IllegalDataValue; //
 					}
 				}
 				break;
@@ -507,7 +504,7 @@ namespace ARC_Modbus
 			case 2: /* Function Code: 02 */
 				if (this->CallBack_InputCoils)
 				{
-					if (this->decoder.Parameter <= 2000)// 02 modbus協定表示 最大的線圈讀取數是2000
+					if (this->decoder.Parameter <= 2000) // 02 modbus協定表示 最大的線圈讀取數是2000
 					{
 						err = this->CallBack_InputCoils(
 							this->parent,
@@ -517,7 +514,7 @@ namespace ARC_Modbus
 					}
 					else
 					{
-						err = Ex_IllegalDataValue; // 
+						err = Ex_IllegalDataValue; //
 					}
 				}
 				break;
@@ -525,7 +522,7 @@ namespace ARC_Modbus
 			case 3: /* Function Code: 03 */
 				if (this->CallBack_Register)
 				{
-					if (this->decoder.Parameter <= 125)// modbus協定表示 最大的數值讀取數是125
+					if (this->decoder.Parameter <= 125) // modbus協定表示 最大的數值讀取數是125
 					{
 						err = this->CallBack_Register(
 							this->parent,
@@ -536,7 +533,7 @@ namespace ARC_Modbus
 					}
 					else
 					{
-						err = Ex_IllegalDataValue; // 
+						err = Ex_IllegalDataValue; //
 					}
 				}
 				break;
@@ -544,7 +541,7 @@ namespace ARC_Modbus
 			case 4: /* Function Code: 04 */
 				if (this->CallBack_InputRegs)
 				{
-					if (this->decoder.Parameter <= 125)// modbus協定表示 最大的數值讀取數是125
+					if (this->decoder.Parameter <= 125) // modbus協定表示 最大的數值讀取數是125
 					{
 						err = this->CallBack_InputRegs(
 							this->parent,
@@ -554,7 +551,7 @@ namespace ARC_Modbus
 					}
 					else
 					{
-						err = Ex_IllegalDataValue; // 
+						err = Ex_IllegalDataValue; //
 					}
 				}
 				break;
@@ -637,7 +634,7 @@ namespace ARC_Modbus
 							this->parent,
 							this->reg_buffer,
 							this->decoder.DataAddres,
-							this->decoder.Parameter, // 16's Parameter is number of registers to write 
+							this->decoder.Parameter, // 16's Parameter is number of registers to write
 							true);
 					}
 					else
@@ -650,16 +647,16 @@ namespace ARC_Modbus
 			default:
 				err = Ex_IllegalFunction; //收到還沒有實作的Function Code
 				break;
-			}// end of switch (this->decoder.FunctionCode)
+			} // end of switch (this->decoder.FunctionCode)
 
 			int tx_msg_length = 0;
 			if (err != Ex_not_initial)
 			{
 				this->ecoder.GetResponse(
-					this->tx_msg_buffer, tx_msg_length,/* 回應的封包寫在這個buffer */
-					this->reg_buffer,	/* iFunctionCode = 01,02,03,04 會用到 */
-					this->decoder,		/* 把 decoder 的參數傳遞給 ecoder*/
-					err);				/* exceptions 錯誤訊息 */
+					this->tx_msg_buffer, tx_msg_length, /* 回應的封包寫在這個buffer */
+					this->reg_buffer,					/* iFunctionCode = 01,02,03,04 會用到 */
+					this->decoder,						/* 把 decoder 的參數傳遞給 ecoder*/
+					err);								/* exceptions 錯誤訊息 */
 			}
 			else
 			{
@@ -670,10 +667,10 @@ namespace ARC_Modbus
 
 			if (this->Event_TxWork && tx_msg_length > 0)
 			{
-				this->Event_TxWork(this->tx_msg_buffer, tx_msg_length);
+				this->Event_TxWork(this->parent, this->tx_msg_buffer, tx_msg_length);
 			}
 
-		}// end of if ( this->decoder.FrameRenew() == true)
+		} // end of if ( this->decoder.FrameRenew() == true)
 	}
 
 #endif
@@ -683,17 +680,14 @@ namespace ARC_Modbus
 	{
 		this->request.ByteBuffer_ptr = this->byte_buffer;
 		this->response.ByteBuffer_ptr = this->byte_buffer;
-
 	}
 
 	RTU_Master::~RTU_Master()
 	{
-
 	}
 
 	void RTU_Master::Polling(void)
 	{
-
 	}
 #endif // ARC_Modbus_Master_RTU_ENABLED
 
@@ -706,12 +700,10 @@ namespace ARC_Modbus
 
 	ASCII_Master::~ASCII_Master()
 	{
-
 	}
 
 	void ASCII_Master::Polling(void)
 	{
-
 	}
 #endif // ARC_Modbus_Master_ASCII_ENABLED
 
@@ -722,16 +714,15 @@ namespace ARC_Modbus
 		this->response.ByteBuffer_ptr = this->byte_buffer;
 		this->packet.datas = this->byte_buffer;
 		this->packet.size = 0;
-		
+
 		this->Event_Response = 0;
 	}
 
 	TCP_Master::~TCP_Master()
 	{
-
 	}
 
-	void TCP_Master::RxWork(char* iBytes, int iLength)
+	void TCP_Master::RxWork(char *iBytes, int iLength)
 	{
 		for (int i = 0; i < iLength; i++)
 		{
@@ -741,7 +732,7 @@ namespace ARC_Modbus
 
 	void TCP_Master::RxWork(char iByte)
 	{
-		if (this->step == polling_step_wait_response && 
+		if (this->step == polling_step_wait_response &&
 			this->packet.size != sizeof(this->byte_buffer))
 		{
 			this->byte_buffer[this->packet.size++] = iByte;
@@ -749,7 +740,7 @@ namespace ARC_Modbus
 		}
 		else
 		{
-			this->packet.size  = 0;
+			this->packet.size = 0;
 		}
 	}
 
@@ -777,7 +768,7 @@ namespace ARC_Modbus
 						{
 							if (this->CallBack_WriteCoilsRequest)
 							{
-								char* oRegs;
+								char *oRegs;
 								this->CallBack_WriteCoilsRequest(&oRegs, this->task_count, task);
 								packet = this->request.Write(task.SlaveID, task.Address, oRegs, task.Number);
 								if (this->Event_TxWork && packet.size > 0)
@@ -792,7 +783,7 @@ namespace ARC_Modbus
 						{
 							if (this->CallBack_WriteCoilsRequest)
 							{
-								short* oRegs;
+								short *oRegs;
 								this->CallBack_WriteRegsRequest(&oRegs, this->task_count, task);
 								packet = this->request.Write(task.SlaveID, task.Address, oRegs, task.Number);
 								if (this->Event_TxWork && packet.size > 0)
@@ -819,7 +810,7 @@ namespace ARC_Modbus
 						this->task_count++;
 						this->task_count = this->task_count % this->task_size;
 					}
-				}// end of if (this->task_lists[this->task_count].Type != PollingTaskType_None)
+				} // end of if (this->task_lists[this->task_count].Type != PollingTaskType_None)
 				else
 				{
 					this->task_count++;
@@ -849,8 +840,8 @@ namespace ARC_Modbus
 						PollingTaskRef task = this->task_lists[this->task_count];
 						int ex = this->response.CheckException(this->packet, task.SlaveID);
 						if (ex > 0)
-						{//偵測到例外訊息
-						 //printf("[debug] response.CheckException : %d\r\n", ex);
+						{ //偵測到例外訊息
+						  // printf("[debug] response.CheckException : %d\r\n", ex);
 							if (this->Event_Response)
 								this->Event_Response(this, this->task_count, task, (Exception)ex);
 
@@ -897,8 +888,8 @@ namespace ARC_Modbus
 				break;
 			default:
 				break;
-			}// end of switch (this->step)
-		}// end of if (this->task_size != 0)		
+			} // end of switch (this->step)
+		}	  // end of if (this->task_size != 0)
 	}
 
 	bool TCP_Master::GetCoil(int iIndex)
