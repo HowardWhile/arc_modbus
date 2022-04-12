@@ -7,3 +7,5 @@
 *.user
 *.suo
 *.sdf
+ipch/
+*.opensdf
